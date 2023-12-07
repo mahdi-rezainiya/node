@@ -11,8 +11,13 @@ app.set('view engine' , 'ejs');
 app.listen(3000)
 
 app.get('/' , (req , res) => {
+    const blogs = [
+        {title : 'bahram in journey' , snippet : 'Lorem ipsum dolor sit amet consectetur.'},
+        {title : 'how to fix bugs' , snippet : 'Lorem ipsum dolor sit amet consectetur.'},
+        {title : 'nasa finds in planet' , snippet : 'Lorem ipsum dolor sit amet consectetur.'}
+    ]
     // res.sendFile('./views/index.html' , {root : __dirname})
-    res.render('index' , {title : 'Home'})
+    res.render('index' , {title : 'Home' , blogs : blogs})
 })
 
 app.get('/about' , (req , res) => {

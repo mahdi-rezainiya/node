@@ -1,29 +1,26 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | <%= title %></title>
-</head>
+
+<%- include('./partials/head.ejs')  %>
+
 <body>
-    <% const name = "Mahdi" %>
-    <nav>
-        <div class="site-title">
-            <%= name %>
-            <a href="/">
-                <h1>OpenCode blog</h1>
-            </a>
-            <p>Great Site Ever</p>
-        </div>
-        <ul>
-            <li href="/">Blogs</li>
-            <li href="/about">About</li>
-            <li href="/blog/create">New Blog</li>
-        </ul>
-    </nav>
+    
+    <%- include('./partials/nav.ejs')  %>
+
 
     <div class="blogs content">
         <h2>All Blogs</h2>
+
+        <% if(blogs.length > 0){ %>
+            <%  blogs.forEach(blog => { %>
+                <h3 class="title"><%=  blog.title %></h3>
+                <p class="snippet"><%= blog.snippet %></p>
+                <%  }) %>
+            <%  } else{ %>
+            <p>There are no blogs to this place</p>
+            <%  } %>
     </div>
+
+    <%- include('./partials/footer.ejs')  %>
 
 </body>
 </html>
