@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 
 // express app
 const app = express();
@@ -10,13 +11,15 @@ app.set('view engine' , 'ejs');
 // listen for request
 app.listen(3000)
 
-app.use((req , res , next) => {
-    console.log("New Request was Made");
-    console.log("Host:" , req.hostname);
-    console.log("Path:" , req.path);
-    console.log("Method:" , req.method);
-    next()
-})
+app.use(morgan('tiny'))
+
+// app.use((req , res , next) => {
+//     console.log("New Request was Made");
+//     console.log("Host:" , req.hostname);
+//     console.log("Path:" , req.path);
+//     console.log("Method:" , req.method);
+//     next()
+// })
 
 app.get('/' , (req , res) => {
     const blogs = [
@@ -32,10 +35,10 @@ app.get('/about' , (req , res) => {
     res.render('about' , {title : 'About'})
 })
 
-app.use((req , res , next) => {
-    console.log("---------------------- opencode ---------------------");
-    next()
-})
+// app.use((req , res , next) => {
+//     console.log("---------------------- opencode ---------------------");
+//     next()
+// })
 
 app.get('/blogs/create' , (req , res) => {
     res.render('create' , {title : 'Create a New Blog'})
