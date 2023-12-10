@@ -1,5 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+// const { result } = require('lodash');
 
 // express app
 const app = express();
@@ -9,7 +11,23 @@ app.set('view engine' , 'ejs');
 // app.set('views' , 'mahdi');
 
 // listen for request
-app.listen(3000)
+// app.listen(3000)
+
+// connect to mongodb
+
+const dbURL = 'mongodb+srv://mahdi:MInKJKrms3NU5ywn@cluster0.zj67veu.mongodb.net/cluster0?retryWrites=true&w=majority'
+
+mongoose.connect(dbURL)
+    .then((result) => {
+        // console.log('connected');
+        app.listen(3000)
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+
+
+app.use(express.static('public'))
 
 app.use(morgan('tiny'))
 
