@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 // const { result } = require('lodash');
+const Blog = require('./model/blog');
 
 // express app
 const app = express();
@@ -22,22 +23,66 @@ mongoose.connect(dbURL)
         // console.log('connected');
         app.listen(3000)
     })
-    .catch((err) => {
-        console.log(err);
-    })
+    .catch((err) => 
+        console.log(err)
+    );
 
 
 app.use(express.static('public'))
 
 app.use(morgan('tiny'))
 
-// app.use((req , res , next) => {
-//     console.log("New Request was Made");
-//     console.log("Host:" , req.hostname);
-//     console.log("Path:" , req.path);
-//     console.log("Method:" , req.method);
-//     next()
-// })
+// adding blog
+app.get('/add-blog' , (req , res) => {
+    const blog = new Blog({
+        title : 'new blog 3',
+        snippet : 'about my new blog 3',
+        body :  'Lorem ipsum dolor sit amet consectetur adipisicing.'
+    }) ;
+
+    blog.save()
+        .then((result) => {res.send(result)})
+        .catch((err) => console.log(err))
+})
+
+// getting all blogs
+app.get('/all-blog' , (req , res) => {
+    Blog.find()
+        .then((result) => res.send(result))
+        .catch((err) => {console.log(err);})
+})
+
+// getting single blog
+app.get('/single-blog' , (req , res) => {
+    Blog.findById('6576b5c8cfa405bdec2839d1')
+        .then((result) => res.send(result))
+        .catch((err) => {console.log(err);})
+})
+
+// deleting single blog
+app.get('/d-single-blog' , (req , res) => {
+    Blog.findByIdAndDelete('6576b9d35068b97ee154238f')
+        .then((result) =>{
+            if(result){
+                res.send(`Document deleted : ${result}`)
+            }
+            else{
+                res.send(`Document not found`)
+            }
+        })
+        .catch((err) => {console.log(err);})
+})
+
+// deleting all blogs
+app.get('/d-all-blog' , (req , res) => {
+    Blog.deleteMany({})
+        .then((result) => res.send(result))
+        .catch((err) => {console.log(err);})
+})
+
+
+
+
 
 app.get('/' , (req , res) => {
     const blogs = [
@@ -53,10 +98,6 @@ app.get('/about' , (req , res) => {
     res.render('about' , {title : 'About'})
 })
 
-// app.use((req , res , next) => {
-//     console.log("---------------------- opencode ---------------------");
-//     next()
-// })
 
 app.get('/blogs/create' , (req , res) => {
     res.render('create' , {title : 'Create a New Blog'})

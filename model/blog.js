@@ -1,22 +1,22 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema ;
 
 const blogSchema = new Schema({
     title : {
-        type : string ,
+        type : String ,
         required : true
     },
     snippet : {
-        type : string ,
-        required : false
+        type : String ,
+        required : true 
     },
     body : {
-        type : string ,
+        type : String ,
         required : true 
     }
 } , {timestamps : true})
 
-const Blog = mongoose.model('blogs' , blogSchema)
+const Blog = mongoose.model('Blog' , blogSchema)
 
-module.export = Blog ;
+module.exports = Blog ;
