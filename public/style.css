@@ -1,6 +1,6 @@
-body {
+/* body {
     background: black;
-}
+} */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital@1&display=swap');
 
 body {
@@ -51,11 +51,17 @@ h3{
     text-transform: capitalize;
     margin-bottom: 7px;
 }
-p {
-    margin-bottom: 18px;
-}
 .content{
     margin-left: 20px;
+}
+.blogs a {
+    display: block;
+    margin: 40px 0;
+    padding-left: 30px;
+    border-left: 6px solid crimson;
+}
+.blogs a:hover h3{
+    color: crimson;
 }
 .create-blog{
     max-width: 400px;
