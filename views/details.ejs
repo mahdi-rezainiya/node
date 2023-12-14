@@ -11,8 +11,27 @@
             <div class="content">
                 <p><%= blog.body %></p>
             </div>
+            <a class="delete" data-doc="<%= blog._id %>">Delete</a>
         </div>
 
         <%- include('./partials/footer.ejs') %>
+
+        <script>
+            const trashDoc = document.querySelector('a.delete');
+
+            trashDoc.addEventListener('click' , (e) => {
+                const endpoint = `/blogs/${trashDoc.dataset.doc}` ;
+
+                fetch(endpoint , {
+                    method : 'DELETE'
+                })
+                .then((response) => response.json())
+                .then((data) => window.location.href = data.redirect)
+                .catch(err => console.log(err))
+            })
+
+
+
+        </script>
     </body>
 </html>
