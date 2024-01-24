@@ -1,31 +1,64 @@
-const mysql = require('mysql2');
+const pool = require('../utilities/mysql_database')
 
-// Create the connection pool. The pool-specific settings are the defaults
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '913@mSm@@',
-    database: 'mydb',
-}).promise();
-
-const getCourses = async() => {
-  const [result] = await pool.query('select * from employees')
-  return result
+class CoursesModel {
+  static getCourses = async() => {
+    const [result] = await pool.query('select * from employees')
+    return result
+  }
+  
+  static getCourse = async(id) => {
+    const [result] = await pool
+      .query(`select * from person 
+                  where id=?` , [id])
+    return result[0]
+  }
+  static insertCourse = async (title) => {
+    const [result] = await pool
+      .query(`insert into person(title)
+        values(?)` ,
+        [title]);
+        // return {id : result.insertId , title : title}
+        return getCourse(result.insertId)
+  }
+  
+  static updateCourse = async(id , title) => {
+    const [result] = await pool.query(`update person
+    set title = ? 
+    where id = ?` ,
+    [title , id])
+    return getCourse(id)
+  }
+  
+  static deleteCourse = async(id) => {
+    const result = await pool.query(`delete from person
+    where Id = ? ` , [id])
+    // return result
+    return id
+  }
+  
+  static callStoredProcedure = async(id) => {
+    const [result] = await pool.query(`call s_select(?)` , [id])
+    return result[0]
+  }
+  
 }
 
-const getCourse = async(id) => {
-  const [result] = await pool
-    .query(`select * from employees 
-                where employee_id=?` , [id])
-  return result[0]
-}
-const insertCourse = async (title) => {
-  const result = await pool
-    .query(`insert into person(title)
-                values(?)` ,
-                [title])
-  return result
-}
+module.exports = CoursesModel;
 
-const data = insertCourse('python')
-.then((result) => console.log(result))
+
+
+
+
+// const data = callStoredProcedure(4)
+// .then((result) => console.log(result))
+
+
+
+
+
+
+
+
+
+
+
