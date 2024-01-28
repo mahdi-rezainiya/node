@@ -1,7 +1,5 @@
 const pool = require('../utilities/mysql_database')
 
-// module.exports = CoursesModel;
-
 class CoursesModel {
   static getCourses = async() => {
     const [result] = await pool.query(`select * from person`)
@@ -39,5 +37,4 @@ class CoursesModel {
     return result[0]
   }
 }
-
 module.exports = CoursesModel ;
